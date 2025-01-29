@@ -1,0 +1,959 @@
+<!-- File 1: employee-onboarding.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Onboarding Form</title>
+    <style>
+        body { 
+            margin: 0; 
+            font-family: Arial, sans-serif; 
+            background-color: #f9f9f9; 
+        }
+        .form-container { 
+            width: 95%; 
+            margin: 30px auto; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            height: auto; 
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input,
+        select,
+        button {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input:focus,
+        select:focus {
+            border-color: #007bff;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 0px 10px;
+        }
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 2px solid #ccc;
+            color: #777;
+            font-size: 14px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        .progress-step.active {
+            border-color: #007bff;
+            color: #007bff;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .a {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .a .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .previous {
+            background-color: #ffc107;
+            color: #fff;
+        }
+        .previous:hover {
+            background-color: #e0a800;
+        }
+        #educationContainer,
+        #employmentContainer {
+            margin-top: 10px;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        button[type="button"]:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .certificates {
+            width: 220px;
+        }
+        .error {
+            border-color: red !important;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 style="text-align: center;">Employee Onboarding Form</h1>
+        <div class="progress-bar">
+            <span class="progress-step active">Personal Details</span>
+            <span class="progress-step">Educational Details</span>
+            <span class="progress-step">Bank Details</span>
+            <span class="progress-step">ID Uploads</span>
+            <span class="progress-step">Previous Company</span>
+        </div>
+
+        <form id="onboardingForm">
+            <!-- Step 1: Personal Details -->
+            <div class="step active" id="step1">
+                <h2>Personal Details</h2>
+                <div class="a">
+                    <div class="form-group">
+                        <label for="firstName">First Name*</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name*</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" id="email" required>
+                    </div>
+                </div>
+                <div class="a">
+                    <div class="form-group">
+                        <label for="phone">Phone Number*</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guardianName">Guardian Name*</label>
+                        <input type="text" id="guardianName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guardianPhone">Guardian Phone Number*</label>
+                        <input type="tel" id="guardianPhone" required>
+                    </div>
+                </div>
+                <div class="a">
+                    <div class="form-group">
+                        <label for="DateofBirth">Date of Birth*</label>
+                        <input type="date" id="DateofBirth" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender*</label>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="marital">Marital Status*</label>
+                        <select id="marital" required>
+                            <option value="">Select Status</option>
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="divorced">Divorced</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div></div>
+                    <button type="button" onclick="nextStep(1)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Educational Details -->
+            <div class="step" id="step2">
+                <h2>Educational Details</h2>
+                <div id="educationContainer">
+                    <div class="education-entry">
+                        <div class="a">
+                            <div class="form-group">
+                                <label for="collegeName">College Name*</label>
+                                <input type="text" class="collegeName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="course">Course*</label>
+                                <input type="text" class="course" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="branch">Branch*</label>
+                                <input type="text" class="branch" required>
+                            </div>
+                        </div>
+                        <div class="a">
+                            <div class="form-group">
+                                <label for="passoutYear">Passed Out Year*</label>
+                                <input 
+    type="number" 
+    class="passoutYear" 
+    min="1900" 
+    max="2024" 
+    step="1"
+    required
+    onkeydown="return event.key !== 'e' && event.key !== 'E'"
+    oninput="this.value = this.value.replace(/[eE]/g, '')"
+>
+                            </div>
+                            <div class="form-group">
+                                <label for="percentage">Pass Percentage*</label>
+                                <!-- <input type="number" class="percentage" min="0" max="100" step="0.01" required> -->
+                                <input 
+                                type="number" 
+                                class="percentage" 
+                                min="0" 
+                                max="100" 
+                                step="0.01"
+                                required
+                                onkeydown="return event.key !== 'e' && event.key !== 'E'"
+                                oninput="this.value = this.value.replace(/[eE]/g, '')"
+                            >
+                            </div>
+                            <div class="form-group">
+                                <label for="collegeLocation">College Location*</label>
+                                <input type="text" class="collegeLocation" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="certificates">Certificate*</label>
+                            <input type="file" class="certificates" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="addEducation()" style="margin-top: 20px;">+ Add More Education</button>
+                <div class="buttons">
+                    <button type="button" class="previous" onclick="previousStep(2)">Previous</button>
+                    <button type="button" onclick="nextStep(2)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Bank Details -->
+            <div class="step" id="step3">
+                <h2>Bank Details</h2>
+                <div class="a">
+                    <div class="form-group">
+                        <label for="accountHolder">Account Holder Name*</label>
+                        <input type="text" id="accountHolder" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bankName">Name of the Bank*</label>
+                        <input type="text" id="bankName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number*</label>
+                        <input type="text" id="accountNumber" required>
+                    </div>
+                </div>
+                <div class="a">
+                    <div class="form-group">
+                        <label for="bankBranch">Branch*</label>
+                        <input type="text" id="bankBranch" required>
+                    </div>
+                    <!-- <div class="a"> -->
+                        <div class="form-group">
+                            <label for="ifscCode">IFSC Code*</label>
+                            <input type="text" id="ifscCode" required>
+                        </div>
+                   
+                    <div class="form-group">
+                        <label for="bankLocation">Location*</label>
+                        <input type="text" id="bankLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pinCode">Pin Code*</label>
+                        <input type="text" id="pinCode" pattern="[0-9]{6}" required>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="previous" onclick="previousStep(3)">Previous</button>
+                    <button type="button" onclick="nextStep(3)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 4: ID Uploads -->
+            <div class="step" id="step4">
+                <h2>ID Uploads</h2>
+                <div id="IDuploads">
+                    <div class="a">
+                        <div class="form-group">
+                            <label for="panCard">PAN Card*</label>
+                            <input type="file" id="panCard" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="aadharCard">Aadhar Card*</label>
+                            <input type="file" id="aadharCard" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passport">Passport*</label>
+                            <input type="file" id="passport" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="button" class="previous" onclick="previousStep(4)">Previous</button>
+                    <button type="button" onclick="nextStep(4)">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 5: Previous Company -->
+            <div class="step" id="step5">
+                <h2>Previous Company Details</h2>
+                <div id="employmentContainer">
+                    <div class="employment-entry">
+                        <div class="a">
+                            <div class="form-group">
+                                <label for="prevCompany">Company Name*</label>
+                                <input type="text" class="prevCompany" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="designation">Designation*</label>
+                                <input type="text" class="designation" required >
+                            </div>
+                            <div class="form-group">
+                                <label for="experience">Years of Experience*</label>
+                                <input 
+    type="number" 
+    class="experience" 
+    min="0" 
+    max="50"
+    step="0.5"
+    onkeydown="return event.key !== 'e' && event.key !== 'E'"
+    oninput="this.value = this.value.replace(/[eE]/g, '')"
+required>
+                            </div>
+                        </div>
+                        <div class="a">
+                            <div class="form-group">
+                                <label for="startDate">Start Date*</label>
+                                <input type="date" class="startDate"required >
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">End Date*</label>
+                                <input type="date" class="endDate"required>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Location*</label>
+                                <input type="text" class="location" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="relievingLetter">Relieving Letter*</label>
+                            <input type="file" class="relievingLetter" required >
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="addEmployment()" style="margin-top: 40px;">+ Add More Employment</button>
+                <div class="buttons">
+                    <button type="button" class="previous" onclick="previousStep(5)">Previous</button>
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+       
+       let currentStep = 1;
+const totalSteps = 5;
+
+// Validation functions
+function validateIFSCCode(ifscCode) {
+    const ifscPattern = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+    return ifscPattern.test(ifscCode);
+}
+
+function clearError(input) {
+    input.classList.remove('error');
+    const errorMessage = input.parentElement.querySelector('.error-message');
+    if (errorMessage) {
+        errorMessage.remove();
+    }
+}
+
+function addErrorMessage(input, message) {
+    const existingError = input.parentElement.querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    input.parentElement.appendChild(errorDiv);
+}
+
+function validateInput(input) {
+    clearError(input);
+    if (!input.value) return false;
+
+    let isValid = true;
+    let errorMessage = '';
+
+    switch(input.type) {
+        case 'text':
+            if (input.id === 'ifscCode') {
+                if (!validateIFSCCode(input.value)) {
+                    isValid = false;
+                    errorMessage = 'Invalid IFSC Code. Must be 11 characters (4 letters, 0, 6 alphanumeric)';
+                }
+            }
+            else if (input.id === 'firstName' || input.id === 'lastName' || input.id === 'guardianName') {
+                const nameWithoutSpaces = input.value.replace(/\s/g, '');
+                const namePattern = /^[A-Za-z]{5,}$/;
+                if (!namePattern.test(nameWithoutSpaces)) {
+                    isValid = false;
+                    errorMessage = 'Must contain at least 5 alphabets (spaces not counted), no numbers or special characters';
+                }
+            }
+            else if (input.classList.contains('collegeName') || 
+                    input.classList.contains('course') || 
+                    input.classList.contains('branch') || 
+                    input.classList.contains('collegeLocation')) {
+                const valueWithoutSpaces = input.value.replace(/\s/g, '');
+                const eduPattern = /^[A-Za-z]{5,}$/;
+                if (!eduPattern.test(valueWithoutSpaces)) {
+                    isValid = false;
+                    errorMessage = 'Must contain minimum 5 alphabets (spaces not counted), no numbers or special characters allowed';
+                }
+            }
+            else if (input.id === 'accountHolder' || 
+                    input.id === 'bankName' || 
+                    input.id === 'bankBranch' || 
+                    input.id === 'bankLocation') {
+                const valueWithoutSpaces = input.value.replace(/\s/g, '');
+                const bankFieldPattern = /^[A-Za-z]{5,}$/;
+                if (!bankFieldPattern.test(valueWithoutSpaces)) {
+                    isValid = false;
+                    errorMessage = 'Must contain minimum 5 alphabets (spaces not counted), no numbers or special characters allowed';
+                }
+            }
+            else if (input.classList.contains('prevCompany') || 
+                    input.classList.contains('designation') || 
+                    input.classList.contains('location')) {
+                const valueWithoutSpaces = input.value.replace(/\s/g, '');
+                const companyFieldPattern = /^[A-Za-z]{5,}$/;
+                if (!companyFieldPattern.test(valueWithoutSpaces)) {
+                    isValid = false;
+                    errorMessage = 'Must contain minimum 5 alphabets (spaces not counted), no numbers or special characters allowed';
+                }
+            }
+            else if (input.id === 'accountNumber') {
+                const accountPattern = /^\d+$/;
+                if (!accountPattern.test(input.value)) {
+                    isValid = false;
+                    errorMessage = 'Account number should contain only numbers';
+                }
+            }
+            else if (input.id === 'pinCode') {
+                const pinCodePattern = /^\d{6}$/;
+                if (!pinCodePattern.test(input.value)) {
+                    isValid = false;
+                    errorMessage = 'Pin code must be exactly 6 digits';
+                }
+            }
+            break;
+
+        case 'email':
+            const emailPattern = /^[A-Za-z]+[A-Za-z0-9]+@(gmail\.com|yahoo\.com|outlook\.com)$/;
+            if (!emailPattern.test(input.value)) {
+                isValid = false;
+                errorMessage = 'Email must be in format: abcs12@gmail.com/yahoo.com/outlook.com';
+            }
+            break;
+
+        case 'tel':
+            const phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(input.value)) {
+                isValid = false;
+                errorMessage = 'Phone number must be exactly 10 digits';
+            }
+            break;
+
+        case 'file':
+            if (input.files && input.files[0]) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!allowedTypes.includes(input.files[0].type)) {
+                    isValid = false;
+                    errorMessage = 'Invalid file type. Please upload JPG, PNG or PDF';
+                }
+            }
+            break;
+
+        case 'date':
+            const inputDate = new Date(input.value);
+            const today = new Date();
+            
+            if (input.classList.contains('endDate')) {
+                const startDate = input.parentElement.parentElement.querySelector('.startDate').value;
+                if (startDate && new Date(input.value) < new Date(startDate)) {
+                    isValid = false;
+                    errorMessage = 'End date cannot be before start date';
+                }
+            }
+            
+            if (input.id === 'DateofBirth') {
+                const minAge = 20;
+                const minDate = new Date();
+                minDate.setFullYear(minDate.getFullYear() - minAge);
+                
+                if (inputDate > today) {
+                    isValid = false;
+                    errorMessage = 'Date of birth cannot be in future';
+                } else if (inputDate > minDate) {
+                    isValid = false;
+                    errorMessage = `Age must be at least ${minAge} years`;
+                }
+            }
+            break;
+    }
+
+    if (!isValid) {
+        input.classList.add('error');
+        addErrorMessage(input, errorMessage);
+    }
+
+    return isValid;
+}
+
+function validateEducationEntries() {
+    const educationEntries = document.querySelectorAll('.education-entry');
+    let isValid = true;
+
+    educationEntries.forEach(entry => {
+        const inputs = entry.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            clearError(input);
+            
+            if (input.value) {
+                if (!validateInput(input)) {
+                    isValid = false;
+                }
+            }
+        });
+    });
+
+    return isValid;
+}
+
+function addRemoveButtons() {
+    // Education entries
+    document.querySelectorAll('#educationContainer .education-entry').forEach((entry, index) => {
+        const existingRemoveBtn = entry.querySelector('.remove-education');
+        if (existingRemoveBtn) existingRemoveBtn.remove();
+
+        if (document.querySelectorAll('#educationContainer .education-entry').length > 1) {
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.textContent = '- Remove Education';
+            removeBtn.style.marginBottom = '20px';
+            removeBtn.style.marginTop = '10px';
+            removeBtn.className = 'remove-education';
+            removeBtn.onclick = function() {
+                entry.remove();
+                addRemoveButtons();
+            };
+            entry.appendChild(removeBtn);
+        }
+    });
+
+    // Employment entries
+    document.querySelectorAll('#employmentContainer .employment-entry').forEach((entry, index) => {
+        const existingRemoveBtn = entry.querySelector('.remove-employment');
+        if (existingRemoveBtn) existingRemoveBtn.remove();
+
+        if (document.querySelectorAll('#employmentContainer .employment-entry').length > 1) {
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.textContent = '- Remove Employment';
+            removeBtn.style.marginBottom = '20px';
+            removeBtn.style.marginTop = '10px';
+            removeBtn.className = 'remove-employment';
+            removeBtn.onclick = function() {
+                entry.remove();
+                addRemoveButtons();
+            };
+            entry.appendChild(removeBtn);
+        }
+    });
+}
+
+function addEducation() {
+    const container = document.getElementById('educationContainer');
+    const template = container.querySelector('.education-entry').cloneNode(true);
+    
+    template.querySelectorAll('input').forEach(input => {
+        input.value = '';
+        clearError(input);
+        
+        input.addEventListener('input', function() {
+            if (this.value) {
+                validateInput(this);
+            } else {
+                clearError(this);
+            }
+        });
+    });
+    
+    container.appendChild(template);
+    addRemoveButtons();
+}
+
+function addEmployment() {
+    const container = document.getElementById('employmentContainer');
+    const template = container.querySelector('.employment-entry').cloneNode(true);
+    
+    template.querySelectorAll('input').forEach(input => {
+        input.value = '';
+        clearError(input);
+        
+        input.addEventListener('input', function() {
+            if (this.value) {
+                validateInput(this);
+            } else {
+                clearError(this);
+            }
+        });
+    });
+    
+    container.appendChild(template);
+    addRemoveButtons();
+}
+
+function updateProgressBar(step) {
+    const progressSteps = document.querySelectorAll('.progress-step');
+    progressSteps.forEach((stepEl, index) => {
+        if (index + 1 <= step) {
+            stepEl.classList.add('active');
+        } else {
+            stepEl.classList.remove('active');
+        }
+    });
+}
+
+function showStep(step) {
+    document.querySelectorAll('.step').forEach(stepEl => {
+        stepEl.classList.remove('active');
+    });
+    document.getElementById(`step${step}`).classList.add('active');
+    updateProgressBar(step);
+}
+
+function previousStep(currentStepNum) {
+    if (currentStepNum > 1) {
+        currentStep = currentStepNum - 1;
+        showStep(currentStep);
+    }
+}
+
+function nextStep(currentStepNum) {
+    if (validateStep(currentStepNum)) {
+        if (currentStepNum < totalSteps) {
+            currentStep = currentStepNum + 1;
+            showStep(currentStep);
+        }
+    }
+}
+
+function validateStep(step) {
+    const currentStepElement = document.getElementById(`step${step}`);
+    const inputs = currentStepElement.querySelectorAll('input[required], select[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        clearError(input);
+        
+        if (!input.value) {
+            isValid = false;
+            input.classList.add('error');
+            addErrorMessage(input, `${input.previousElementSibling.textContent.replace('*', '')} is required`);
+        } else if (!validateInput(input)) {
+            isValid = false;
+        }
+    });
+
+    if (step === 2) {
+        isValid = validateEducationEntries() && isValid;
+    }
+
+    return isValid;
+}
+
+function collectFormData() {
+    const formData = {
+        personalDetails: {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            guardianName: document.getElementById('guardianName').value,
+            guardianPhone: document.getElementById('guardianPhone').value,
+            dateOfBirth: document.getElementById('DateofBirth').value,
+            gender: document.getElementById('gender').value,
+            maritalStatus: document.getElementById('marital').value
+        },
+        educationalDetails: [],
+        bankDetails: {
+            accountHolder: document.getElementById('accountHolder').value,
+            bankName: document.getElementById('bankName').value,
+            accountNumber: document.getElementById('accountNumber').value,
+            bankBranch: document.getElementById('bankBranch').value,
+            ifscCode: document.getElementById('ifscCode').value,
+            bankLocation: document.getElementById('bankLocation').value,
+            pinCode: document.getElementById('pinCode').value
+        },
+        idUploads: {
+            panCard: document.getElementById('panCard').files[0]?.name || '',
+            aadharCard: document.getElementById('aadharCard').files[0]?.name || '',
+            passport: document.getElementById('passport').files[0]?.name || ''
+        },
+        previousCompany: []
+    };
+
+    document.querySelectorAll('.education-entry').forEach(entry => {
+        if (entry.querySelector('.collegeName').value) {
+            formData.educationalDetails.push({
+                collegeName: entry.querySelector('.collegeName').value,
+                course: entry.querySelector('.course').value,
+                branch: entry.querySelector('.branch').value,
+                passoutYear: entry.querySelector('.passoutYear').value,
+                percentage: entry.querySelector('.percentage').value,
+                location: entry.querySelector('.collegeLocation').value,
+                certificateName: entry.querySelector('.certificates').files[0]?.name || ''
+            });
+        }
+    });
+
+    document.querySelectorAll('.employment-entry').forEach(entry => {
+        if (entry.querySelector('.prevCompany').value) {
+            formData.previousCompany.push({
+                companyName: entry.querySelector('.prevCompany').value,
+                designation: entry.querySelector('.designation').value,
+                experience: entry.querySelector('.experience').value,
+                startDate: entry.querySelector('.startDate').value,
+                endDate: entry.querySelector('.endDate').value,
+                location: entry.querySelector('.location').value,
+                relievingLetter: entry.querySelector('.relievingLetter').files[0]?.name || ''
+            });
+        }
+    });
+
+    return formData;
+}
+
+function saveFormData(formData) {
+    try {
+        const employees = JSON.parse(localStorage.getItem('onboardingEmployees') || '[]');
+        const employeeIndex = employees.findIndex(emp => 
+            emp.personalDetails.email === formData.personalDetails.email);
+
+        const employeeData = {
+            id: employeeIndex >= 0 ? employees[employeeIndex].id : Date.now(),
+            ...formData,
+            status: {
+                personalDetails: true,
+                educationalDetails: formData.educationalDetails.length > 0,
+                bankDetails: Boolean(formData.bankDetails.accountNumber),
+                idUploads: Boolean(formData.idUploads.panCard),
+                previousCompany: formData.previousCompany.length > 0
+            },
+            lastUpdated: new Date().toISOString(),
+            progress: 0
+        };
+
+        const totalSections = Object.keys(employeeData.status).length;
+        const completedSections = Object.values(employeeData.status).filter(Boolean).length;
+        employeeData.progress = (completedSections / totalSections) * 100;
+
+        if (employeeIndex >= 0) {
+            employees[employeeIndex] = employeeData;
+        } else {
+            employees.push(employeeData);
+        }
+
+        localStorage.setItem('onboardingEmployees', JSON.stringify(employees));
+        return employeeData;
+    } catch (error) {
+        console.error('Error saving form data:', error);
+        throw new Error('Failed to save form data');
+    }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('onboardingForm');
+    
+    form.querySelectorAll('input[required], select[required]').forEach(input => {
+        input.addEventListener('input', function() {
+            validateInput(this);
+        });
+        
+        input.addEventListener('blur', function() {
+            if (this.value) {
+                validateInput(this);
+            }
+        });
+    });
+
+    // Phone number formatters
+    const phoneInputs = ['phone', 'guardianPhone'];
+    phoneInputs.forEach(inputId => {
+        document.getElementById(inputId).addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 13) {
+                value = value.slice(0, 13);
+            }
+            e.target.value = value;
+        });
+    });
+
+    // Pin code formatter
+    document.getElementById('pinCode').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 6) value = value.slice(0, 6);
+        e.target.value = value;
+    });
+
+    // Account number formatter
+    document.getElementById('accountNumber').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16);
+    });
+
+    // IFSC code formatter
+    document.getElementById('ifscCode').addEventListener('input', function(e) {
+        e.target.value = e.target.value.toUpperCase();
+    });
+
+    // Percentage input validation
+    document.querySelectorAll('.percentage').forEach(input => {
+        input.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^\d.]/g, '');
+            let parts = value.split('.');
+            if (parts[0].length > 3) {
+                parts[0] = parts[0].slice(0, 3);
+            }
+            if (parts[1]) {
+                parts[1] = parts[1].slice(0, 2);
+            }
+            value = parts.join('.');
+            let numValue = parseFloat(value);
+            if (numValue > 100) {
+                value = '100';
+            }
+            e.target.value = value;
+        });
+    });
+
+    // Experience input validation
+    document.querySelectorAll('.experience').forEach(input => {
+        input.addEventListener('input', function(e) {
+            let value = parseFloat(e.target.value);
+            if (value > 50) {
+                e.target.value = 50;
+            }
+            if (e.target.value.includes('.')) {
+                const parts = e.target.value.split('.');
+                if (parts[1].length > 1) {
+                    e.target.value = parseFloat(e.target.value).toFixed(1);
+                }
+            }
+        });
+    });
+
+    // Initial remove buttons setup
+    addRemoveButtons();
+});
+
+// Form submission handler
+document.getElementById('onboardingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Validate all steps before submission
+    for (let step = 1; step <= totalSteps; step++) {
+        if (!validateStep(step)) {
+            showStep(step);
+            return;
+        }
+    }
+
+    try {
+        const formData = collectFormData();
+        const savedData = saveFormData(formData);
+
+        if (savedData) {
+            alert(`Form submitted successfully! Your onboarding progress: ${Math.round(savedData.progress)}%`);
+            
+            // Reset form and UI
+            this.reset();
+            document.querySelectorAll('.education-entry:not(:first-child), .employment-entry:not(:first-child)').forEach(el => el.remove());
+            currentStep = 1;
+            showStep(1);
+            
+            // Clear all error messages
+            document.querySelectorAll('.error-message').forEach(el => el.remove());
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error submitting the form. Please try again.');
+    }
+});
+
+// Add validation for file sizes
+document.querySelectorAll('input[type="file"]').forEach(fileInput => {
+    fileInput.addEventListener('change', function(e) {
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        if (this.files[0] && this.files[0].size > maxSize) {
+            alert('File size should not exceed 5MB');
+            this.value = '';
+        }
+    });
+});
+    </script>
+</body>
+</html>
